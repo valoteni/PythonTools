@@ -21,6 +21,7 @@ class Catcher(threading.Thread):
         self.lock.acquire()
         print '404: ' + imgName
         self.lock.release()
+        continue
       data = net.read()
       imgName = url.split('/')[-1]
       img = open(imgName, 'wb')

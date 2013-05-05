@@ -50,7 +50,7 @@ if __name__ == '__main__':
   else:
     outPath = time.strftime('%Y%m%d', time.gmtime())
 
-  f = open('data.txt')
+  f = open(dataFile)
   for line in f:
     for u in line.split('"'):
       if re_http.search(u) and re_img.search(u):

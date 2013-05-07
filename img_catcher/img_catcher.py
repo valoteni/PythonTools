@@ -42,7 +42,7 @@ if __name__ == '__main__':
   index = 0
 
   re_http = re.compile('http+')
-  re_img = re.compile('.*[.](jpg$|png$).*$')
+  re_img = re.compile('.*[.](jpg$|png$|gif$).*$')
 
   dataFile = sys.argv[1]
   if len(sys.argv) >= 3:

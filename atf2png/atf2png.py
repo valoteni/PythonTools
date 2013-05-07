@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os, sys, struct
 
 def U24(bytes):

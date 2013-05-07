@@ -19,32 +19,45 @@ def ATFRGBA8888(data, count, n):
   return ATFRGB888(data, count, n)
   
 def ATFCOMPRESSED(data, count, n):
-  dxt1DataLength = U24(data.read(3))
-  dxt1Data = data.read(dxt1DataLength)
-  dxt1ImageDataLength = U24(data.read(3))
-  dxt1ImageData = data.read(dxt1ImageDataLength)
-  pvrtcTopDataLength = U24(data.read(3))
-  pvrtcTopData = data.read(pvrtcTopDataLength)
-  pvrtcBottomDataLength = U24(data.read(3))
-  pvrtcBottomData = data.read(pvrtcBottomDataLength)
-  pvrtcImageDataLength = U24(data.read(3))
-  pvrtcImageData = data.read(pvrtcImageDataLength)
-  etc1TopDataLength = U24(data.read(3))
-  etc1TopData = data.read(etc1TopDataLength)
-  etc1BottomDataLength = U24(data.read(3))
-  etc1BottomData = data.read(etc1BottomDataLength)
-  etc1ImageDataLength = U24(data.read(3))
-  etc1ImageData = data.read(etc1ImageDataLength)
-  return [
-    dxt1Data,
-    dxt1ImageData,
-    pvrtcTopData,
-    pvrtcBottomData,
-    pvrtcImageData,
-    etc1TopData,
-    etc1BottomData,
-    etc1ImageData
-  ]
+  l = []
+  print '---'
+  a = 0
+  for ct in range(1, 2):
+    dxt1DataLength = U24(data.read(3))
+    print dxt1DataLength
+    dxt1Data = data.read(dxt1DataLength)
+    dxt1ImageDataLength = U24(data.read(3))
+    print dxt1ImageDataLength
+    dxt1ImageData = data.read(dxt1ImageDataLength)
+    pvrtcTopDataLength = U24(data.read(3))
+    print pvrtcTopDataLength
+    pvrtcTopData = data.read(pvrtcTopDataLength)
+    pvrtcBottomDataLength = U24(data.read(3))
+    print pvrtcBottomDataLength
+    pvrtcBottomData = data.read(pvrtcBottomDataLength)
+    pvrtcImageDataLength = U24(data.read(3))
+    print pvrtcImageDataLength
+    pvrtcImageData = data.read(pvrtcImageDataLength)
+    etc1TopDataLength = U24(data.read(3))
+    print etc1TopDataLength
+    etc1TopData = data.read(etc1TopDataLength)
+    etc1BottomDataLength = U24(data.read(3))
+    print etc1BottomDataLength
+    etc1BottomData = data.read(etc1BottomDataLength)
+    etc1ImageDataLength = U24(data.read(3))
+    print etc1ImageDataLength
+    etc1ImageData = data.read(etc1ImageDataLength)
+    l.append([
+      dxt1Data,
+      dxt1ImageData,
+      pvrtcTopData,
+      pvrtcBottomData,
+      pvrtcImageData,
+      etc1TopData,
+      etc1BottomData,
+      etc1ImageData
+    ])
+  return l
 
 class Atf():
   def __init__(self, data):
@@ -67,7 +80,11 @@ class Atf():
     self.textureData = self.getTextureData()
     for i in range(0, len(self.textureData)):
       if self.textureData[i]:
-        print 'i:%d, len:%d' % (i, len(self.textureData[i]))
+        for j in range(0, len(self.textureData[i])):
+          print 'i:%d, j:%d, len:%d' % (i, j, len(self.textureData[i][j]))
+          f = open('out.png', 'wb')
+          f.write(self.textureData[i][j])
+          f.close()
   def getTextureData(self):
     if self.cubemap == 0:
       if self.format == 0:
@@ -86,7 +103,7 @@ class Atf():
     return None
 
 if __name__ == "__main__":
-  inputFile = 'canwu.atf'
+  inputFile = 'canjuan6.atf'
   f = open(inputFile, 'rb')
   atf = Atf(f)
   f.close()
